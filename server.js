@@ -132,6 +132,10 @@ app.get('/dashboard', (req, res) => {
     res.render('dashboard');
 });
 
+app.get('/add-loan', (req, res) => {
+    res.render('addLoan');
+})
+
 app.post('/add-loan', authenticateToken, async (req, res) => {
     try {
         const { username, bookTitle, bookAuthor, loanDate, dueDate } = req.body;
