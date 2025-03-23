@@ -35,7 +35,7 @@ block content
             const errorAlertDiv = document.getElementById('errorAlertSignup');
 
             try {
-                const res = await axios.post('/signup', { username, password, confirmPassword });
+                const res = await axios.post('/auth/signup', { username, password, confirmPassword });
                 if (res.data.token) {
                     sessionStorage.setItem('accessToken', res.data.token);
                     sessionStorage.setItem('refreshToken', res.data.refreshToken);

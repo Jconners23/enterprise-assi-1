@@ -43,7 +43,7 @@ block content
             const refreshToken = DOMPurify.sanitize(sessionStorage.getItem('refreshToken'));
 
             // Call the logout API before clearing sessionStorage
-            const logoutResponse = await fetch('/logout', {
+            const logoutResponse = await fetch('/auth/logout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ refreshToken })
@@ -59,7 +59,7 @@ block content
             const username = DOMPurify.sanitize(sessionStorage.getItem('username'));
 
             try {
-                const response = await fetchWithAuth('/loan-records', {
+                const response = await fetchWithAuth('/loans/loan-records', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 'username': username })
@@ -77,7 +77,7 @@ block content
 
         async function returnBook(id) {
             try {
-                const response = await fetchWithAuth('/return-book', {
+                const response = await fetchWithAuth('/loans/return-book', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify( {'id': id} )

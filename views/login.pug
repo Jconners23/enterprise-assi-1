@@ -31,7 +31,7 @@ block content
             const errorAlertDiv = document.getElementById('errorAlertLogin');
 
             try {
-                const res = await axios.post('/login', { username, password });
+                const res = await axios.post('/auth/login', { username, password });
                 if (res.data.token) {
                     sessionStorage.setItem('accessToken', res.data.token);
                     sessionStorage.setItem('refreshToken', res.data.refreshToken);

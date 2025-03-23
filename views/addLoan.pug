@@ -44,7 +44,7 @@ block content
                 const dueDate = DOMPurify.sanitize(document.getElementById("dueDate").value);
 
                 try {
-                    const response = await fetchWithAuth("/add-loan", {
+                    const response = await fetchWithAuth("/loans/add-loan", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ username, bookTitle, bookAuthor, loanDate, dueDate })

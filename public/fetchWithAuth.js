@@ -14,7 +14,7 @@ async function fetchWithAuth(url, options = {}) {
 
         // Get new token
         const refreshToken = sessionStorage.getItem('refreshToken');
-        const refreshResponse = await fetch('/refresh-token', {
+        const refreshResponse = await fetch('/auth/refresh-token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refreshToken })
@@ -30,7 +30,7 @@ async function fetchWithAuth(url, options = {}) {
             console.log("Refresh token invalid, logging out...");
 
             // Call the logout API before clearing sessionStorage
-            const logoutResponse = await fetch('/logout', {
+            const logoutResponse = await fetch('/auth/logout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ refreshToken })
