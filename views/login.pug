@@ -25,8 +25,8 @@ block content
         async function loginFormSubmit(e) {
             e.preventDefault();
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = DOMPurify.sanitize(document.getElementById('username').value);
+            const password = DOMPurify.sanitize(document.getElementById('password').value);
 
             const errorAlertDiv = document.getElementById('errorAlertLogin');
 
@@ -40,7 +40,7 @@ block content
                     window.location.href = '/dashboard';
                 }
             } catch(error) {
-                errorAlertDiv.innerText = error.response?.data?.error; 
+                errorAlertDiv.innerText = DOMPurify.sanitize(error.response?.data?.error); 
                 errorAlertDiv.hidden = false;
             }
         }

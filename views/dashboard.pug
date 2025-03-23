@@ -26,7 +26,7 @@ block content
     script.
         document.addEventListener("DOMContentLoaded", async function(e) {
             e.preventDefault();
-            document.getElementById('usernameDisplay').innerText = sessionStorage.getItem('username') || 'Guest';
+            document.getElementById('usernameDisplay').innerText = DOMPurify.sanitize(sessionStorage.getItem('username')) || 'Guest';
             document.getElementById('toggleViewBtn').value = "filtered";
             await refreshLoanData();
         });
@@ -40,7 +40,7 @@ block content
         });
 
         document.getElementById("logoutBtn").addEventListener('click', async function(e) {
-            const refreshToken = sessionStorage.getItem('refreshToken');
+            const refreshToken = DOMPurify.sanitize(sessionStorage.getItem('refreshToken'));
 
             // Call the logout API before clearing sessionStorage
             const logoutResponse = await fetch('/logout', {
@@ -56,7 +56,7 @@ block content
         });
 
         async function getLoanRecords() {
-            const username = sessionStorage.getItem('username');
+            const username = DOMPurify.sanitize(sessionStorage.getItem('username'));
 
             try {
                 const response = await fetchWithAuth('/loan-records', {
@@ -129,12 +129,12 @@ block content
         }
 
         function createTableRow(loan, today) {
-            const dueDate = new Date(loan.due_date);
+            const dueDate = new Date(DOMPurify.sanitize(loan.due_date));
 
-            const returnedDate = loan.returned_date ? new Date(loan.returned_date) : null;
+            const returnedDate = loan.returned_date ? new Date(DOMPurify.sanitize(loan.returned_date)) : null;
             const isOverdue = !returnedDate && dueDate < today;
             const isLate = returnedDate && returnedDate > dueDate;
-            const status = isLate ? '<span class="text-danger">Returned Late</span>' : (returnedDate ? '<span class="text-success">Returned</span>' : `<button class="btn btn-danger return-btn" data-id="${loan._id}">Return</button>`);
+            const status = isLate ? '<span class="text-danger">Returned Late</span>' : (returnedDate ? '<span class="text-success">Returned</span>' : `<button class="btn btn-danger return-btn" data-id="${DOMPurify.sanitize(loan._id)}">Return</button>`);
 
             const row = document.createElement("tr");
 
@@ -145,10 +145,10 @@ block content
         function createTableRowInnerHTML(loan, dueDate, isOverdue, status) {
             return `
                 <td>
-                    <strong>${loan.book_title}</strong><br>
-                    <small class="text-muted">${loan.book_author}</small>
+                    <strong>${DOMPurify.sanitize(loan.book_title)}</strong><br>
+                    <small class="text-muted">${DOMPurify.sanitize(loan.book_author)}</small>
                 </td>
-                <td>${new Date(loan.loan_date).toLocaleDateString("en-GB")}</td>
+                <td>${new Date(DOMPurify.sanitize(loan.loan_date)).toLocaleDateString("en-GB")}</td>
                 <td>
                     ${dueDate.toLocaleDateString("en-GB")}
                     ${isOverdue ? '<br><span class="text-danger">Overdue</span>' : ''}

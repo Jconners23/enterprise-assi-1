@@ -37,11 +37,11 @@ block content
             loanForm.addEventListener("submit", async function(e) {
                 e.preventDefault();
 
-                const username = sessionStorage.getItem("username");
-                const bookTitle = document.getElementById("bookTitle").value;
-                const bookAuthor = document.getElementById("bookAuthor").value;
-                const loanDate = document.getElementById("loanDate").value;
-                const dueDate = document.getElementById("dueDate").value;
+                const username = DOMPurify.sanitize(sessionStorage.getItem("username"));
+                const bookTitle = DOMPurify.sanitize(document.getElementById("bookTitle").value);
+                const bookAuthor = DOMPurify.sanitize(document.getElementById("bookAuthor").value);
+                const loanDate = DOMPurify.sanitize(document.getElementById("loanDate").value);
+                const dueDate = DOMPurify.sanitize(document.getElementById("dueDate").value);
 
                 try {
                     const response = await fetchWithAuth("/add-loan", {
@@ -61,7 +61,7 @@ block content
                     loanForm.reset();
 
                 } catch (error) {
-                    errorAlert.innerText = "Error: " + error.message;
+                    errorAlert.innerText = "Error: " + DOMPurify.sanitize(error.message);
                     errorAlert.hidden = false;
                     successAlert.hidden = true;
                 }
