@@ -44,7 +44,8 @@ block content
                     window.location.href = '/dashboard';
                 }
             } catch(error) {
-                errorAlertDiv.innerText = DOMPurify.sanitize(error.response?.data?.error); 
+                const errorMessage = error.response?.data?.error;
+                errorAlertDiv.innerText = Array.isArray(errorMessage) ? errorMessage.map((error) => error.msg).join('\n') : errorMessage; 
                 errorAlertDiv.hidden = false;
             }
         }

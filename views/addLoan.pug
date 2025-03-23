@@ -61,7 +61,7 @@ block content
                     loanForm.reset();
 
                 } catch (error) {
-                    errorAlert.innerText = "Error: " + DOMPurify.sanitize(error.message);
+                    errorAlert.innerText = "Error: " + error.message;
                     errorAlert.hidden = false;
                     successAlert.hidden = true;
                 }
